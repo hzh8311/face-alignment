@@ -1,0 +1,5 @@
+../example/helen_trained_model/helenModel
+1
+1
+/home/huangzh/data/lfpw/testset/
+../example/lfpw_test_images_list_with_ground_truth.txt

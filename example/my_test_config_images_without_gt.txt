@@ -1,0 +1,5 @@
+../example/helen_trained_model/helenModel
+0
+1
+/home/huangzh/data/my_data/
+../example/my_img_lists.txt
