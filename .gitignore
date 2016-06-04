@@ -17,4 +17,5 @@ example/helen_trained_model/*
 G*
 tags
 .DS_Store
-G*
+.pyc
+.ycm_extra_config.py
