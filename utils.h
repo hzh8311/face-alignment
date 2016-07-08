@@ -102,7 +102,7 @@ void LoadImages(std::vector<cv::Mat_<uchar> >& images, std::vector<cv::Mat_<doub
 void LoadImages(std::vector<cv::Mat_<uchar> >& images, std::vector<cv::Mat_<double> >& ground_truth_shapes,
 	std::vector<BoundingBox>& bboxes, std::vector<std::string>& image_path_prefix, std::vector<std::string>& image_lists);
 
-void LoadImages(std::vector<cv::Mat_<uchar> >& images, std::vector<BoundingBox>& bboxes,
+void LoadImages(std::vector<cv::Mat>& colorImages,std::vector<cv::Mat_<uchar> >& images, std::vector<BoundingBox>& bboxes,
 	std::vector<std::string>& image_path_prefix, std::vector<std::string>& image_lists);
 
 bool ShapeInRect(cv::Mat_<double>& ground_truth_shape, cv::Rect&);

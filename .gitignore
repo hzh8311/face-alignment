@@ -19,3 +19,4 @@ tags
 .DS_Store
 *.pyc
 *.py
+.clang_complete

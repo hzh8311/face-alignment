@@ -302,11 +302,12 @@ void LoadImages(std::vector<cv::Mat_<uchar> >& images,
 
 }
 
-void LoadImages(std::vector<cv::Mat_<uchar> >& images,
-                std::vector<BoundingBox>& bboxes,
-                std::vector<std::string>& image_path_prefix,
-                std::vector<std::string>& image_lists){
-
+void LoadImages(std::vector<cv::Mat >& colorImages,
+        std::vector<cv::Mat_<uchar> >& images,
+        std::vector<BoundingBox>& bboxes,
+        std::vector<std::string>& image_path_prefix,
+        std::vector<std::string>& image_lists){
+    //No ground truth test override
     std::string fn_haar = "./../haarcascade_frontalface_alt2.xml";
     cv::CascadeClassifier haar_cascade;
     bool yes = haar_cascade.load(fn_haar);
@@ -329,20 +330,23 @@ void LoadImages(std::vector<cv::Mat_<uchar> >& images,
           else{
             image_path = path_prefix + "/" + image_file_name;
           }
-          cv::Mat_<uchar> image = cv::imread(image_path.c_str(), 0);
+          cv::Mat_<uchar> image;
+          cv::Mat colorImage = cv::imread(image_path.c_str(), 1);
           
-          if (image.cols > 2000){
-            cv::resize(image, image, cv::Size(image.cols / 4, image.rows / 4), 0, 0, cv::INTER_LINEAR);
+          if (colorImage.cols > 2000){
+            cv::resize(colorImage, colorImage, cv::Size(colorImage.cols / 4, colorImage.rows / 4), 0, 0, cv::INTER_LINEAR);
           }
-          else if (image.cols > 1400 && image.cols <= 2000){
-            cv::resize(image, image, cv::Size(image.cols / 3, image.rows / 3), 0, 0, cv::INTER_LINEAR);
+          else if (colorImage.cols > 1400 && colorImage.cols <= 2000){
+            cv::resize(colorImage, colorImage, cv::Size(colorImage.cols / 3, colorImage.rows / 3), 0, 0, cv::INTER_LINEAR);
           }
+          cv::cvtColor(colorImage,image,cv::COLOR_BGR2GRAY);
           
           std::vector<cv::Rect> faces;
           haar_cascade.detectMultiScale(image, faces, 1.1, 2, 0, cv::Size(30, 30));
           
           cv::Rect faceRec = faces[0]; // this position may not contain a face
           images.push_back(image);
+          colorImages.push_back(colorImage);
           BoundingBox bbox;
           bbox.start_x = faceRec.x;
           bbox.start_y = faceRec.y;
